@@ -1,1 +1,26 @@
-{% extends "base.html" %}
+{% extends 'base.html' %}
+
+{% block title %}
+  Image Steganography
+{% endblock %}
+
+{% block content %}
+  <div class="d-flex mb-3">
+    <div class="me-auto p-2">
+      <div class="d-flex align-items-start flex-column" style="height: 60vh; width: 20vw; margin-left: 15vw; margin-top: 15vh">
+        {% for image in images %}
+        <div class="p-2" style="width: 20vw; height: 40vh; border: 1px black">
+            <img style="width: 100%; height: 100%;" src="{{MEDIA_URL}} {{image.image.url}}">
+        </div>
+        {% endfor %}
+        <div class="p-2 btn btn-light mx-auto">Upload image (placeholder)</div>
+      </div>
+    </div>
+    <div class="p-2">
+      <div class="d-flex align-items-end flex-column" style="height: 60vh; width: 20vw; margin-right: 15vw; margin-top: 15vh">
+        <div class="p-2 border" style="width: 20vw; height: 40vh; border: 1px black"></div>
+        <div class="p-2 btn btn-light mx-auto">Upload image (placeholder)</div>
+      </div>
+    </div>
+  </div>
+{% endblock %}
