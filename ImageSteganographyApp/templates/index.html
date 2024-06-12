@@ -16,16 +16,21 @@
         <div class="p-2 btn btn-light mx-auto">
           <form method="post" enctype="multipart/form-data">
             {% csrf_token %}
-            {{ form.as_p }}
-            <input type="submit" value="Submit">
+            {{ upload_image_form.as_p }}
+            <button type="submit" name="upload_image">Upload</button>
             </form>
         </div>
       </div>
     </div>
     <div class="p-2">
+      
       <div class="d-flex align-items-end flex-column" style="height: 60vh; width: 20vw; margin-right: 15vw; margin-top: 15vh">
-        <div class="p-2 border" style="width: 20vw; height: 40vh; border: 1px black"></div>
-        <div class="p-2 btn btn-light mx-auto">Upload image (placeholder)</div>
+        
+        <form method="post", enctype="multipart/form-data">
+          {% csrf_token %}
+          {{ text_form.as_p }}
+          <button type="submit" name="encode_text">Encode</button>
+        </form>
       </div>
     </div>
   </div>
