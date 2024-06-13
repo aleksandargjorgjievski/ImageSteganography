@@ -13,7 +13,7 @@ def Encode(src, message, dest):
         n = 4
     total_pixels = array.size//n
 
-    message += "$t3g0"
+    message += "$af4g"
     b_message = ''.join([format(ord(i), "08b") for i in message])
     req_pixels = len(b_message)
 
@@ -53,11 +53,11 @@ def Decode(src):
 
     message = ""
     for i in range(len(hidden_bits)):
-        if message[-5:] == "$t3g0":
+        if message[-5:] == "$af4g":
             break
         else:
             message += chr(int(hidden_bits[i], 2))
-    if "$t3g0" in message:
-        print("Hidden Message:", message[:-5])
+    if "$af4g" in message:
+        return(message[:-5])
     else:
-        print("No Hidden Message Found")
+        return("No Hidden Message Found")
