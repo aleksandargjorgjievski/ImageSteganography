@@ -14,4 +14,4 @@ class DecryptedImage (models.Model):
     image = models.ImageField(upload_to="data/", blank=True, null=True)
     
     def __str__(self):
-        return "Image"  
+        return self.file.name  

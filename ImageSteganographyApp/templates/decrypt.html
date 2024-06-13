@@ -8,13 +8,23 @@
           <img class="image-responsive" style="width: 640px; height: 360px;" src="{{ MEDIA_URL }} {{ image.image.url }}" />
         </div>
 
-        <div class="p-2 btn btn-light">
-          <form method="post" enctype="multipart/form-data">
+        <div class="d-flex justify-content-evenly" style="width: 35vw;">
+          <div class="p-2 btn btn-light">
+            <form method="post" enctype="multipart/form-data">
+              {% csrf_token %}
+              {{ decrypted_image_form.as_p }}
+              <button type="submit" name="upload_image" class="btn btn-primary mx-auto">Upload</button>
+            </form>
+          </div>
+
+          <form method="post">
             {% csrf_token %}
-            {{ decrypted_image_form.as_p }}
-            <button type="submit" name="upload_image" class="btn btn-primary mx-auto">Upload</button>
+          <button type="submit" name="decode_text" class="btn btn-success mt-4" style="height: 5vh; width: 10vw;">Decode</button>
           </form>
         </div>
+
+      
+
       </div>
     </div>
     <div class="p-2">
