@@ -13,13 +13,21 @@
             <form method="post" enctype="multipart/form-data">
               {% csrf_token %}
               {{ decrypted_image_form.as_p }}
-              <button type="submit" name="upload_image" class="btn btn-primary mx-auto">Upload</button>
+              {% if user.is_authenticated %}
+                <button type="submit" name="upload_image" class="btn btn-primary mx-auto">Upload</button>
+              {% else %}
+               <button type="submit" name="upload_image" class="btn btn-primary mx-auto" disabled>Upload</button>
+              {% endif %}
             </form>
           </div>
 
           <form method="post">
             {% csrf_token %}
-          <button type="submit" name="decode_text" class="btn btn-success mt-4" style="height: 5vh; width: 10vw;">Decode</button>
+            {% if user.is_authenticated %}
+              <button type="submit" name="decode_text" class="btn btn-success mt-4" style="height: 5vh; width: 10vw;">Decode</button>
+            {% else %}
+              <button type="submit" name="decode_text" class="btn btn-success mt-4" style="height: 5vh; width: 10vw;" disabled>Decode</button>
+            {% endif %}
           </form>
         </div>
 
