@@ -1,6 +1,6 @@
 from django import forms
 
-from .models import UploadImage
+from .models import UploadImage, EncryptionData, DecryptedImage
 
 class UploadImageForm (forms.ModelForm):
     class Meta:
@@ -11,5 +11,33 @@ class UploadImageForm (forms.ModelForm):
         }
     def __init__(self, *args, **kwargs):
         super(UploadImageForm, self).__init__(*args, **kwargs)
+        for field in self.visible_fields():
+            field.field.widget.attrs['class'] = 'form-control'
+
+class EncryptionDataForm (forms.ModelForm):
+    class Meta:
+        model = EncryptionData
+        fields = ["userData",]
+        widgets = {
+            'userData': forms.TextInput(attrs={
+                'required': True,
+                'placeholder': "Enter text...",
+                'style': 'width: 20vw; height: 40vh; resize: none; padding-left: 0; padding-top: 0; text-align: left;',
+                }),
+        }
+    def __init__(self, *args, **kwargs):
+        super(EncryptionDataForm, self).__init__(*args, **kwargs)
+        for field in self.visible_fields():
+            field.field.widget.attrs['class'] = 'form-control'
+
+class DecryptionImageForm (forms.ModelForm):
+    class Meta:
+        model = DecryptedImage
+        fields = ["image",]
+        widgets = {
+            'image': forms.FileInput(attrs={'required': True})
+        }
+    def __init__(self, *args, **kwargs):
+        super(DecryptionImageForm, self).__init__(*args, **kwargs)
         for field in self.visible_fields():
             field.field.widget.attrs['class'] = 'form-control'

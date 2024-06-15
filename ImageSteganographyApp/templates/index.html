@@ -9,23 +9,36 @@
     <div class="me-auto p-2">
       <div class="d-flex align-items-start flex-column" style="height: 60vh; width: 20vw; margin-left: 15vw; margin-top: 15vh">
         
-        <div class="p-2" style="width: 20vw; height: 40vh; border: 1px black">
-            <img style="width: 100%; height: 100%;" src="{{MEDIA_URL}} {{image.image.url}}">
+        <div class="p-2" style="width: 40vw; height: 40vh; border: 1px black">
+          <img class="image-responsive" style="width: 640px; height: 360px;" src="{{MEDIA_URL}} {{image.image.url}}">
         </div>
-    
+        
         <div class="p-2 btn btn-light mx-auto">
           <form method="post" enctype="multipart/form-data">
             {% csrf_token %}
-            {{ form.as_p }}
-            <input type="submit" value="Submit">
+            {{ upload_image_form.as_p }}
+            {% if user.is_authenticated %}
+            <button type="submit" name="upload_image">Upload</button>
+            {% else %}
+            <button type="submit" name="upload_image" disabled>Upload</button>
+            {% endif %}
             </form>
         </div>
       </div>
     </div>
     <div class="p-2">
-      <div class="d-flex align-items-end flex-column" style="height: 60vh; width: 20vw; margin-right: 15vw; margin-top: 15vh">
-        <div class="p-2 border" style="width: 20vw; height: 40vh; border: 1px black"></div>
-        <div class="p-2 btn btn-light mx-auto">Upload image (placeholder)</div>
+      
+      <div class="d-flex align-items-end flex-column justify-content-center" style="height: 60vh; width: 20vw; margin-right: 15vw; margin-top:7vh">
+        
+        <form method="post", enctype="multipart/form-data" class="mx-auto">
+          {% csrf_token %}
+          {{ text_form.as_p }}
+          {% if user.is_authenticated %}
+          <button type="submit" name="encode_text" class="">Encode</button>
+          {% else %}
+          <button type="submit" name="encode_text" class="" disabled>Encode</button>
+          {% endif %}
+        </form>
       </div>
     </div>
   </div>

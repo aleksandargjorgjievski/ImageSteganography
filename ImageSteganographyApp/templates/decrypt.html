@@ -1,0 +1,55 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <div class="d-flex mb-3">
+    <div class="me-auto p-2">
+      <div class="d-flex align-items-start flex-column" style="height: 60vh; width: 20vw; margin-left: 15vw; margin-top: 15vh">
+        <div class="p-2" style="width: 40vw; height: 40vh; border: 1px black">
+          <img class="image-responsive" style="width: 640px; height: 360px;" src="{{ MEDIA_URL }} {{ image.image.url }}" />
+        </div>
+
+        <div class="d-flex justify-content-evenly" style="width: 35vw;">
+          <div class="p-2 btn btn-light">
+            <form method="post" enctype="multipart/form-data">
+              {% csrf_token %}
+              {{ decrypted_image_form.as_p }}
+              {% if user.is_authenticated %}
+                <button type="submit" name="upload_image" class="btn btn-primary mx-auto">Upload</button>
+              {% else %}
+               <button type="submit" name="upload_image" class="btn btn-primary mx-auto" disabled>Upload</button>
+              {% endif %}
+            </form>
+          </div>
+
+          <form method="post">
+            {% csrf_token %}
+            {% if user.is_authenticated %}
+              <button type="submit" name="decode_text" class="btn btn-success mt-4" style="height: 5vh; width: 10vw;">Decode</button>
+            {% else %}
+              <button type="submit" name="decode_text" class="btn btn-success mt-4" style="height: 5vh; width: 10vw;" disabled>Decode</button>
+            {% endif %}
+          </form>
+        </div>
+
+      
+
+      </div>
+    </div>
+    <div class="p-2">
+      <div class="d-flex align-items-end flex-column" style="height: 60vh; width: 20vw; margin-right: 20vw; margin-top: 15vh">
+        <div class="d-flex flex-column bd-highlight mb-3 text-center">
+          <div class="p-2 bd-highlight">
+            <h1>Decoded Message</h1>
+          </div>
+          <div class="p-2 bd-highlight">
+            {% if decoded_message != 'No Hidden Message Found' %}
+              <p style="font-size: 20px;">{{ decoded_message }}</p>
+            {% else %}
+              <p class="text-danger" style="font-size: 20px;">No hidden message found</p>
+            {% endif %}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock %}
