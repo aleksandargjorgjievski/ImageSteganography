@@ -9,6 +9,9 @@ class UploadImageForm (forms.ModelForm):
         widgets = {
             'image': forms.FileInput(attrs={'required': True})
         }
+        labels = {
+            'image': "Image to be encoded",
+        }
     def __init__(self, *args, **kwargs):
         super(UploadImageForm, self).__init__(*args, **kwargs)
         for field in self.visible_fields():
@@ -19,11 +22,14 @@ class EncryptionDataForm (forms.ModelForm):
         model = EncryptionData
         fields = ["userData",]
         widgets = {
-            'userData': forms.TextInput(attrs={
+            'userData': forms.Textarea(attrs={
                 'required': True,
                 'placeholder': "Enter text...",
-                'style': 'width: 20vw; height: 40vh; resize: none; padding-left: 0; padding-top: 0; text-align: left;',
+                'style': 'width: 20vw; height: 40vh; resize: none; padding: 0; text-align: left;',
                 }),
+        }
+        labels = {
+            'userData': "Text to be encoded:",
         }
     def __init__(self, *args, **kwargs):
         super(EncryptionDataForm, self).__init__(*args, **kwargs)
@@ -36,6 +42,9 @@ class DecryptionImageForm (forms.ModelForm):
         fields = ["image",]
         widgets = {
             'image': forms.FileInput(attrs={'required': True})
+        }
+        labels = {
+            'image': "Image to be decoded",
         }
     def __init__(self, *args, **kwargs):
         super(DecryptionImageForm, self).__init__(*args, **kwargs)
