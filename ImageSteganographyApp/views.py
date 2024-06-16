@@ -2,12 +2,14 @@ from django.shortcuts import render
 from .models import UploadImage, EncryptionData, DecryptedImage
 from .forms import UploadImageForm, EncryptionDataForm, DecryptionImageForm
 from .steganography import Encode, Decode
+import os
 # Create your views here.
 def index(request):
     image = UploadImage.objects.first()
     text = EncryptionData.objects.first()
 
     message = None
+    encoded_status = None
 
     if request.method == "POST":
             upload_image_form = UploadImageForm(request.POST, files = request.FILES)
@@ -29,16 +31,18 @@ def index(request):
                  message = text_form.cleaned_data['userData']
                  if image:
                       src = image.image.path
-                      dest = src  # Change the destination directory as needed
-                      Encode(src, message, dest)
+                      dest_folder = os.path.join(os.path.dirname(os.path.dirname(__file__)), 'encoded')
+                      filename, extension = os.path.splitext(os.path.basename(src))
+                      dest = os.path.join(dest_folder, f"{filename}_encoded{extension}")
+                      encoded_status = Encode(src, message, dest)
                  uploaded_text.save()
     else:
         upload_image_form = UploadImageForm()
         text_form = EncryptionDataForm()
 
-    return render(request, "index.html", {"image": image, "upload_image_form": UploadImageForm, "text_form": EncryptionDataForm})
+    return render(request, "index.html", {"image": image, "upload_image_form": UploadImageForm, "text_form": EncryptionDataForm, "encoded_status": encoded_status})
 
-def decrypt(request):
+def decode(request):
     decoded_image = DecryptedImage.objects.first()
     decoded_messsage = None
 
@@ -56,4 +60,4 @@ def decrypt(request):
             if decoded_image:
                 decoded_messsage = Decode(decoded_image.image.path)
     
-    return render(request, "decrypt.html", {"image": decoded_image, "decrypted_image_form": DecryptionImageForm, "decoded_message": decoded_messsage})
+    return render(request, "decode.html", {"image": decoded_image, "decrypted_image_form": DecryptionImageForm, "decoded_message": decoded_messsage})

@@ -8,37 +8,44 @@
   <div class="d-flex mb-3">
     <div class="me-auto p-2">
       <div class="d-flex align-items-start flex-column" style="height: 60vh; width: 20vw; margin-left: 15vw; margin-top: 15vh">
-        
         <div class="p-2" style="width: 40vw; height: 40vh; border: 1px black">
-          <img class="image-responsive" style="width: 640px; height: 360px;" src="{{MEDIA_URL}} {{image.image.url}}">
+          <img class="image-responsive" style="width: 640px; height: 360px;" src="{{ MEDIA_URL }} {{ image.image.url }}" />
         </div>
-        
-        <div class="p-2 btn btn-light mx-auto">
-          <form method="post" enctype="multipart/form-data">
-            {% csrf_token %}
-            {{ upload_image_form.as_p }}
-            {% if user.is_authenticated %}
-            <button type="submit" name="upload_image">Upload</button>
-            {% else %}
-            <button type="submit" name="upload_image" disabled>Upload</button>
-            {% endif %}
+        <div style="width: 35vw" class="d-flex">
+          <div class="p-2 btn mx-auto">
+            <form method="post" enctype="multipart/form-data">
+              {% csrf_token %}
+              {{ upload_image_form.as_p }}
+              {% if user.is_authenticated %}
+                <button type="submit" class="btn" style="background: #007BFF; color: white" name="upload_image">Upload</button>
+              {% else %}
+                <button type="submit" class="btn" style="background: #007BFF; color: white" name="upload_image" disabled>Upload</button>
+              {% endif %}
             </form>
+          </div>
         </div>
       </div>
     </div>
     <div class="p-2">
-      
       <div class="d-flex align-items-end flex-column justify-content-center" style="height: 60vh; width: 20vw; margin-right: 15vw; margin-top:7vh">
-        
-        <form method="post", enctype="multipart/form-data" class="mx-auto">
+        <form method="post" enctype="multipart/form-data">
           {% csrf_token %}
           {{ text_form.as_p }}
+          <div class="d-flex justify-content-center">
           {% if user.is_authenticated %}
-          <button type="submit" name="encode_text" class="">Encode</button>
+            <button type="submit" style="color: white; background: #0056B3;" name="encode_text" class="btn">Encode</button>
           {% else %}
-          <button type="submit" name="encode_text" class="" disabled>Encode</button>
+            <button type="submit" style="color: white; background: #0056B3;" name="encode_text" class="btn" disabled>Encode</button>
           {% endif %}
+          </div>
         </form>
+        {% if encoded_status == None %}
+        <p class="mx-auto mt-2 h4"></p>
+        {% elif  encoded_status == "Encoding was successful" %}
+        <p class="mx-auto mt-2 h4" style="color: #28a745;"> {{ encoded_status }} </p>
+        {% else %}
+        <p class="mx-auto mt-2 h4" style="color: red;"> {{ encoded_status }} </p>
+        {% endif %}
       </div>
     </div>
   </div>

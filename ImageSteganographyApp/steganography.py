@@ -18,7 +18,7 @@ def Encode(src, message, dest):
     req_pixels = len(b_message)
 
     if req_pixels > total_pixels:
-        print("ERROR: Need larger file size")
+        return("ERROR: Need larger file size")
 
     else:
         index=0
@@ -31,7 +31,7 @@ def Encode(src, message, dest):
         array=array.reshape(height, width, n)
         enc_img = Image.fromarray(array.astype('uint8'), img.mode)
         enc_img.save(dest)
-        print("Encoding was successful")
+        return("Encoding was successful")
 
 def Decode(src):
 
